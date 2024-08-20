@@ -7,7 +7,7 @@ function Landing() {
     <Center>
       <VStack>
       <Button textColor="black" bg="#00ffc4" as={Link} to="/home">
-        Ping Pong example
+        Traffic Light example
       </Button>
       </VStack>  
     </Center>
