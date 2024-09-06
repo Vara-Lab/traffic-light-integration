@@ -22,17 +22,7 @@ function ReadState() {
         return;
       }
   
-      if (!account) {
-        alert.error('Account is not ready');
-        return;
-      }
-  
-      const response = await sails.query(
-        'Query/TrafficLight',
-        {
-          userId: account.decodedAddress
-        }
-      );
+      const response = await sails.query('Query/TrafficLight');
   
       setFullState(response);
     }, 500);

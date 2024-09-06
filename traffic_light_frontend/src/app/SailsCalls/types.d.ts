@@ -4,10 +4,31 @@ import {
     Signer 
 } from "@polkadot/types/types";
 
+/**
+ * ## Inteface with optional initial values for Sails Calls
+ */
 export interface ISailsCalls { 
+    /**
+     * ## Contract id to send messages
+     */
     contractId?: HexString,
+    /**
+     * ## String idl
+     */
     idl?: string,
+    /**
+     * ## Network that SailsCalls will use
+     */
     network?: string,
+    /**
+     * ## Sponsor data that will sign the voucher, voucher updates, etc
+     */
+    voucherSignerData?: SponsorData
+}
+
+export interface SponsorData {
+    sponsorName: string,
+    sponsorMnemonic: string
 }
 
 /**
@@ -16,9 +37,11 @@ export interface ISailsCalls {
 export interface SailsQueryOptions { 
     /**
      * ## User id for the query
-     * It is required for all queries
+     * An ID is required for queries, in this case,
+     * the user address, if not specified, address 
+     * zero will be used
      */
-    userId: HexString,
+    userId?: HexString,
     /**
      * ### Arguments, if any, for query method
      * Specify in the array all arguments for service method
@@ -79,19 +102,24 @@ export interface WalletSigner {
 export interface SailsCallbacks {
     /**
      * ### On success callback
-     * Will run this callback if the message was send successfully.
+     * Will run this callback if the message was send successfully or 
+     * an action with vouchers execute successfully
+     * 
      * @returns void
      */
     onSuccess?: () => void,
     /**
      * ### On error callback
      * Will run this callback if something went wrong.
+     * 
      * @returns void
      */
     onError?: () => void,
     /**
      * ### On load callback
-     * Will run this callback when the message will be loaded.
+     * Will run this callback when the message or a voucher action 
+     * will be loaded.
+     * 
      * @returns void
      */
     onLoad?: () => void,
@@ -99,7 +127,7 @@ export interface SailsCallbacks {
      * ### On block callback
      * Will run this callback when command get its blockhash.
      * 
-     * It does not work in queries
+     * It does not work in queries and voucher actions
      * 
      * @param blockHash Optional parameter, gives blockhash of transaction
      * @returns void
@@ -107,7 +135,8 @@ export interface SailsCallbacks {
     onBlock?: (blockHash?: HexString) => void,
     /**
      * ### On success async callback
-     * Will run this callback when if the message was send successfully.
+     * Will run this callback when if the message was send successfully or 
+     * a voucher action execute successfully.
      * Will stop the execution of the command or query to execute the callback.
      * 
      * @returns Promise that the command or query will execute
@@ -123,7 +152,7 @@ export interface SailsCallbacks {
     onErrorAsync?: () => Promise<void>,
     /**
      * ### On load async callback
-     * Will run this callback when the message will be loaded.
+     * Will run this callback when the message or a voucher action will be loaded.
      * Will stop the execution of the command or query to execute the callback.
      * 
      * @returns Promise that the command or query will execute
@@ -134,14 +163,13 @@ export interface SailsCallbacks {
      * Will run this callback when command get its blockhash.
      * Will stop the execution of the command to execute the callback.
      * 
-     * It does not work in queries
+     * It does not work in queries and voucher actions
      * 
      * @param blockHash Optional parameter, gives blockhash of transaction
      * @returns Promise that the command will execute
      */
     onBlockAsync?: (blockHash?: HexString) => Promise<void>,
 }
-
 export type ContractId = HexString;
 export type ServiceName = string;
 export type MethodName = string;
