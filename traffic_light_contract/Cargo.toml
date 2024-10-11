@@ -11,7 +11,7 @@ edition = "2021"
 license = "MIT"
 
 [workspace.dependencies]
-gstd = "1.6.2"
+gstd = "=1.6.2"
 sails-client-gen = "=0.6.1"
 sails-idl-gen = "=0.6.1"
 sails-rs = "=0.6.1"
