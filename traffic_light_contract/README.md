@@ -1,8 +1,10 @@
 # Traffic light contract
 
-To compile the contract yo need yo enter in 'wasm' and then put:
+To compile the contract run the next command in your terminal:
 
+```sh
 cargo build --release
+```
 
 ## Architecture
 

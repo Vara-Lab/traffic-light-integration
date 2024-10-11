@@ -1,30 +1,33 @@
 // necesary cretes
 use sails_rs::{
     prelude::*,
-    gstd::{
-        service,
-        msg
-    },
-    cell::RefMut
+    gstd::msg
 };
 
 // import the state
 use crate::states::traffic_light_state::TrafficLightState;
 
 // Traffic light service struct to build the service 
-// Data is passed to the service as RefMut (command, this change the state)
-pub struct TrafficLightService<'a> {
-    pub state: RefMut<'a, TrafficLightState>
+#[derive(Default)]
+pub struct TrafficLightService;
+
+// Impl for seed related function to init the state
+impl TrafficLightService {
+    // Related function to init the service state (call only once)
+    // Another related function is created that initializes the state 
+    // to avoid unnecessary imports in the "lib.rs" file, you can see 
+    // that it remains more "structured"
+    pub fn seed() {
+        TrafficLightState::init_state();
+    }
 }
 
 // Trffic light service
 #[service]
-impl<'a> TrafficLightService<'a> {
+impl TrafficLightService {
     // Service constructor
-    pub fn new(state: RefMut<'a, TrafficLightState>) -> Self {
-        Self {
-            state
-        }
+    pub fn new() -> Self {
+        Self
     }
 
     // Remote call "green" exposed to external consumers
@@ -37,11 +40,10 @@ impl<'a> TrafficLightService<'a> {
         let current_light = "Green".to_string();
 
         // Changing state
-        self
-            .state
+        TrafficLightState::state_mut()
             .current_light = current_light.clone();
-        self
-            .state
+
+        TrafficLightState::state_mut()
             .all_users
             .insert(msg::source().into(), current_light);
 
@@ -59,11 +61,9 @@ impl<'a> TrafficLightService<'a> {
         let current_light = "Yellow".to_string();
 
         // Changing state
-        self
-            .state
+        TrafficLightState::state_mut()
             .current_light = current_light.clone();
-        self
-            .state
+        TrafficLightState::state_mut()
             .all_users
             .insert(msg::source().into(), current_light);
 
@@ -81,11 +81,9 @@ impl<'a> TrafficLightService<'a> {
         let current_light = "Red".to_string();
 
         // Changing state
-        self
-            .state
+        TrafficLightState::state_mut()
             .current_light = current_light.clone();
-        self
-            .state
+        TrafficLightState::state_mut()
             .all_users
             .insert(msg::source().into(), current_light);
 

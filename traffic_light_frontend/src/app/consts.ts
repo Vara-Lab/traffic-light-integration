@@ -24,7 +24,7 @@ export const sponsorName = "";
 export const sponsorMnemonic = "";
 
 export const CONTRACT_DATA: ContractSails = {
-  programId: '0x40ee053ed5af803a3c68fa432e11a38c99422bbdec815bbf745d536077d7587a',
+  programId: '0x98863d477f4afc98830ea23460503558d730af4a51528cf7f926547466c0eda5',
   idl: `
     type IoTrafficLightState = struct {
       current_light: str,
