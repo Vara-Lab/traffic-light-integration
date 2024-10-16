@@ -42,5 +42,5 @@ sudo apt install binaryen
 
 Now, you can compile and use the frontend!
 
-- The contract is located in `traffic_light_contract` directory, it contrains extra instructios to compile it.
-- Frontend is located in the `traffic_light_frontend` directory, it contains extra instructions to run the frontend!
+- The contract is located in `traffic_light_contract` directory, it contrains extra [instructios](https://github.com/Vara-Lab/traffic-light-integration/blob/main/traffic_light_contract/README.md) to compile it.
+- Frontend is located in the `traffic_light_frontend` directory, it contains extra [instructions](https://github.com/Vara-Lab/traffic-light-integration/blob/main/traffic_light_frontend/README.md) to run the frontend!
