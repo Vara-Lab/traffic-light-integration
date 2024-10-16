@@ -101,7 +101,7 @@ To compile the contract, you need to run the next command in your terminal:
 cargo build --release
 ```
 
-Once the compilation is complete, locate the `wasm.opt.wasm` file in the `target/wasm32-unknown-unknown/release` directory and the `app.id.` file in the `wasm` directory.
+Once the compilation is complete, locate the `wasm.opt.wasm` file in the `target/wasm32-unknown-unknown/release` directory and the `app.id` file in the `wasm` directory.
 
 ## Interact with your contract on Vara Network
 
@@ -115,6 +115,6 @@ Once the compilation is complete, locate the `wasm.opt.wasm` file in the `target
 
 - Access [Gear IDEA](https://idea.gear-tech.io/programs?node=wss%3A%2F%2Frpc.vara.network) using your web browser.
 - Connect your Substrate wallet to Gear IDE.
-- Upload the `*.opt.wasm` and `metadata.txt` files by clicking the "Upload Program" button.
+- Upload the `wasm.opt.wasm` and `app.idl` files by clicking the "Upload Program" button.
 
 
