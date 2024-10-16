@@ -1,3 +1,1 @@
-import { Wallet } from './wallet';
-
-export { Wallet };
+export { MultiWallet } from "./wallet";

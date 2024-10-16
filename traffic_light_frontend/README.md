@@ -14,6 +14,12 @@ yarn start
 
 ---
 
+If you want to "build" the frontend, you need to use:
+
+```bash
+yarn build
+```
+
 To modify the contract id and IDL that you will use, open the file: src/app/consts.ts
 
 There you will add your contract id and IDL, it will looks like this (you can use ContractSails interface): 
