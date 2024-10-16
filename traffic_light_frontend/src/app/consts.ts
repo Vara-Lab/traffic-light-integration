@@ -26,29 +26,26 @@ export const sponsorMnemonic = "";
 export const CONTRACT_DATA: ContractSails = {
   programId: '0x98863d477f4afc98830ea23460503558d730af4a51528cf7f926547466c0eda5',
   idl: `
-    type IoTrafficLightState = struct {
-      current_light: str,
-      all_users: vec struct { actor_id, str },
-    };
-
     type TrafficLightEvent = enum {
       Green,
       Yellow,
       Red,
     };
 
-    constructor {
-      New : ();
+    type IoTrafficLightState = struct {
+      current_light: str,
+      all_users: vec struct { actor_id, str },
     };
 
-    service Query {
-      query TrafficLight : () -> IoTrafficLightState;
+    constructor {
+      New : ();
     };
 
     service TrafficLight {
       Green : () -> TrafficLightEvent;
       Red : () -> TrafficLightEvent;
       Yellow : () -> TrafficLightEvent;
+      query TrafficLight : () -> IoTrafficLightState;
     };
   `
 };

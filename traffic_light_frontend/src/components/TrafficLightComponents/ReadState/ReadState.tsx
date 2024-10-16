@@ -22,7 +22,7 @@ function ReadState() {
         return;
       }
   
-      const response = await sails.query('Query/TrafficLight');
+      const response = await sails.query('TrafficLight/TrafficLight');
   
       setFullState(response);
     }, 500);
