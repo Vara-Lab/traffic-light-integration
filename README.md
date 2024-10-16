@@ -22,7 +22,7 @@ You can work with the contract and frontend on gitpod!
   </a>
 </p>
 
-### Step 2: Config gitpod to compile the contract
+### Step 2: Configure gitpod to compile the contract
 
 1. Contract compilation:
 
