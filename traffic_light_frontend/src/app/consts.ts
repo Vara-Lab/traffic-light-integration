@@ -24,7 +24,7 @@ export const sponsorName = "";
 export const sponsorMnemonic = "";
 
 export const CONTRACT_DATA: ContractSails = {
-  programId: '0x98863d477f4afc98830ea23460503558d730af4a51528cf7f926547466c0eda5',
+  programId: '0xe394faef158f507f7a46bf98bc1461ab906db114063e28a4c0880ef102cd6c0e',
   idl: `
     type TrafficLightEvent = enum {
       Green,
