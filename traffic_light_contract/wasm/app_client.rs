@@ -43,44 +43,6 @@ pub mod app_factory {
         }
     }
 }
-pub struct Query<R> {
-    remoting: R,
-}
-impl<R> Query<R> {
-    pub fn new(remoting: R) -> Self {
-        Self { remoting }
-    }
-}
-impl<R: Remoting + Clone> traits::Query for Query<R> {
-    type Args = R::Args;
-    fn traffic_light(&self) -> impl Query<Output = IoTrafficLightState, Args = R::Args> {
-        RemotingAction::<_, query::io::TrafficLight>::new(self.remoting.clone(), ())
-    }
-}
-
-pub mod query {
-    use super::*;
-
-    pub mod io {
-        use super::*;
-        use sails_rs::calls::ActionIo;
-        pub struct TrafficLight(());
-        impl TrafficLight {
-            #[allow(dead_code)]
-            pub fn encode_call() -> Vec<u8> {
-                <TrafficLight as ActionIo>::encode_call(&())
-            }
-        }
-        impl ActionIo for TrafficLight {
-            const ROUTE: &'static [u8] = &[
-                20, 81, 117, 101, 114, 121, 48, 84, 114, 97, 102, 102, 105, 99, 76, 105, 103, 104,
-                116,
-            ];
-            type Params = ();
-            type Reply = super::IoTrafficLightState;
-        }
-    }
-}
 pub struct TrafficLight<R> {
     remoting: R,
 }
@@ -99,6 +61,9 @@ impl<R: Remoting + Clone> traits::TrafficLight for TrafficLight<R> {
     }
     fn yellow(&mut self) -> impl Call<Output = TrafficLightEvent, Args = R::Args> {
         RemotingAction::<_, traffic_light::io::Yellow>::new(self.remoting.clone(), ())
+    }
+    fn traffic_light(&self) -> impl Query<Output = IoTrafficLightState, Args = R::Args> {
+        RemotingAction::<_, traffic_light::io::TrafficLight>::new(self.remoting.clone(), ())
     }
 }
 
@@ -152,14 +117,22 @@ pub mod traffic_light {
             type Params = ();
             type Reply = super::TrafficLightEvent;
         }
+        pub struct TrafficLight(());
+        impl TrafficLight {
+            #[allow(dead_code)]
+            pub fn encode_call() -> Vec<u8> {
+                <TrafficLight as ActionIo>::encode_call(&())
+            }
+        }
+        impl ActionIo for TrafficLight {
+            const ROUTE: &'static [u8] = &[
+                48, 84, 114, 97, 102, 102, 105, 99, 76, 105, 103, 104, 116, 48, 84, 114, 97, 102,
+                102, 105, 99, 76, 105, 103, 104, 116,
+            ];
+            type Params = ();
+            type Reply = super::IoTrafficLightState;
+        }
     }
-}
-#[derive(PartialEq, Debug, Encode, Decode, TypeInfo)]
-#[codec(crate = sails_rs::scale_codec)]
-#[scale_info(crate = sails_rs::scale_info)]
-pub struct IoTrafficLightState {
-    pub current_light: String,
-    pub all_users: Vec<(ActorId, String)>,
 }
 #[derive(PartialEq, Debug, Encode, Decode, TypeInfo)]
 #[codec(crate = sails_rs::scale_codec)]
@@ -168,6 +141,13 @@ pub enum TrafficLightEvent {
     Green,
     Yellow,
     Red,
+}
+#[derive(PartialEq, Debug, Encode, Decode, TypeInfo)]
+#[codec(crate = sails_rs::scale_codec)]
+#[scale_info(crate = sails_rs::scale_info)]
+pub struct IoTrafficLightState {
+    pub current_light: String,
+    pub all_users: Vec<(ActorId, String)>,
 }
 
 pub mod traits {
@@ -181,16 +161,11 @@ pub mod traits {
     }
 
     #[allow(clippy::type_complexity)]
-    pub trait Query {
-        type Args;
-        fn traffic_light(&self) -> impl Query<Output = IoTrafficLightState, Args = Self::Args>;
-    }
-
-    #[allow(clippy::type_complexity)]
     pub trait TrafficLight {
         type Args;
         fn green(&mut self) -> impl Call<Output = TrafficLightEvent, Args = Self::Args>;
         fn red(&mut self) -> impl Call<Output = TrafficLightEvent, Args = Self::Args>;
         fn yellow(&mut self) -> impl Call<Output = TrafficLightEvent, Args = Self::Args>;
+        fn traffic_light(&self) -> impl Query<Output = IoTrafficLightState, Args = Self::Args>;
     }
 }

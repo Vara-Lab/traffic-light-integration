@@ -5,7 +5,10 @@ use sails_rs::{
 };
 
 // import the state
-use crate::states::traffic_light_state::TrafficLightState;
+use crate::states::traffic_light_state::{
+    TrafficLightState,
+    IoTrafficLightState
+};
 
 // Traffic light service struct to build the service 
 #[derive(Default)]
@@ -89,6 +92,15 @@ impl TrafficLightService {
 
         // returning the response
         TrafficLightEvent::Red
+    }
+
+    // Remote call "traffic_light" exposed to external consumers
+    // Returns a struct that will be sent as a response to the user
+    // Is treated as a query, keeping everything unchanged and returning some data. (&self)
+    pub fn traffic_light(&self) -> IoTrafficLightState {
+        TrafficLightState::state_ref()
+            .to_owned()
+            .into()
     }
 }
 

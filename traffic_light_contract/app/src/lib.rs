@@ -8,10 +8,7 @@ pub mod states;
 pub mod services;
 
 // Import service to be used for the program
-use services::{
-    traffic_light_service::TrafficLightService,
-    query_service::QueryService
-};
+use services::traffic_light_service::TrafficLightService;
 
 // Traffic light program struct to build the program (there can only be one per contract)
 pub struct TrafficLightProgram;
@@ -30,7 +27,7 @@ impl TrafficLightProgram {
         Self
     }
 
-    // Method working with "&self", havind no other parameters are treated as exposed
+    // Method working with "&self", having no other parameters are treated as exposed
     // service constructors, and are called each time when an incoming request message 
     // needs be dispatched to a selected service
     // It has "message routing", This will change the way a service will be called 
@@ -38,10 +35,5 @@ impl TrafficLightProgram {
     #[route("TrafficLight")]
     pub fn traffic_light_svc(&self) -> TrafficLightService {
         TrafficLightService::new()
-    }
-
-    #[route("Query")]
-    pub fn query_svc(&self) -> QueryService {
-        QueryService::new()
     }
 }
