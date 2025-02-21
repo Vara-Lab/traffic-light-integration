@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "yarn  && vite --port 3002 --open",
+    "start": "yarn  && vite --port 3005 --open",
     "build": "yarn  && tsc && vite build",
     "preview": "vite preview"
   },
